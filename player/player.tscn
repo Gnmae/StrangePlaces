@@ -1,19 +1,18 @@
 [gd_scene format=3 uid="uid://b04yt0rwfckym"]
 
-[ext_resource type="Texture2D" uid="uid://fjlqchl8wje5" path="res://icon.svg" id="1_oul6g"]
 [ext_resource type="Script" uid="uid://suj7u4xr6100" path="res://player/scripts/player.gd" id="1_rkbax"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rkbax"]
-size = Vector2(127, 129)
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oul6g"]
 
-[node name="Player" type="CharacterBody2D" unique_id=197532890]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rkbax"]
+
+[node name="Player" type="CharacterBody3D" unique_id=660326814]
 script = ExtResource("1_rkbax")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1226483198]
-texture = ExtResource("1_oul6g")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1145311079]
+mesh = SubResource("CapsuleMesh_oul6g")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1768883535]
-position = Vector2(0.5, -0.5)
-shape = SubResource("RectangleShape2D_rkbax")
+[node name="CollisionShape2D" type="CollisionShape3D" parent="." unique_id=1683550054]
+shape = SubResource("CapsuleShape3D_rkbax")
 
 [node name="ControllerContainer" type="Node" parent="." unique_id=925662726]

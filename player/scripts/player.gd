@@ -1,4 +1,4 @@
-class_name Player extends CharacterBody2D
+class_name Player extends CharacterBody3D
 
 const SPEED : float = 400.0
 
@@ -17,9 +17,6 @@ func set_controller(_controller : PlayerController) -> void:
 	controller_container.add_child(controller)
 
 func _physics_process(_delta: float) -> void:
-	
-	velocity.x = SPEED * input.x
-	velocity.y = SPEED * input.y
 	
 	move_and_slide()
 

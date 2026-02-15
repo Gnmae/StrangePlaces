@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Strange Places"
-run/main_scene="uid://l3ywg7k17i11"
+run/main_scene="uid://cltctqj6kog0x"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
