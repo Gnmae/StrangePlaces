@@ -2,6 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://b04yt0rwfckym" path="res://player/player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://dyrarwcff6phq" path="res://game.gd" id="1_fc0e3"]
+[ext_resource type="Script" uid="uid://ct0gyvew5u23t" path="res://camera/scripts/camera_3d.gd" id="2_feb5d"]
+[ext_resource type="Script" uid="uid://cic8crft2uusj" path="res://object_types/scripts/floor.gd" id="4_fc0e3"]
+[ext_resource type="Script" uid="uid://cj3ii2w3ljdmg" path="res://object_types/scripts/rotator.gd" id="5_7jktm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e2o6t"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -16,15 +19,21 @@ sky = SubResource("Sky_feb5d")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="BoxMesh" id="BoxMesh_e2o6t"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_feb5d"]
+vertices = PackedVector3Array(-4.25, 1.5, -8.5, 6.5, 1.5, -8.5, 6.5, 1.5, -9.5, -4.5, 1.5, -9.5, -6.5, 1.5, -0.5, -6.5, 1.5, 0.5, 6.5, 1.5, 0.5, 6.5, 1.5, -0.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5)]
 
-[sub_resource type="Gradient" id="Gradient_e2o6t"]
+[sub_resource type="BoxMesh" id="BoxMesh_feb5d"]
+size = Vector3(14, 1, 2)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_feb5d"]
-gradient = SubResource("Gradient_e2o6t")
+[sub_resource type="BoxShape3D" id="BoxShape3D_feb5d"]
+size = Vector3(14, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_feb5d"]
-albedo_texture = SubResource("GradientTexture2D_feb5d")
+[sub_resource type="BoxMesh" id="BoxMesh_fc0e3"]
+size = Vector3(7, 1, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7jktm"]
+size = Vector3(7, 1, 2)
 
 [node name="Game" type="Node3D" unique_id=438035562]
 script = ExtResource("1_fc0e3")
@@ -36,18 +45,47 @@ environment = SubResource("Environment_fc0e3")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1247868393]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1247868393 groups=["Camera"]]
 transform = Transform3D(0.7071068, -0.49999997, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, -0.49999997, 0.5, 50, 72.30237, 50)
 projection = 1
 size = 25.0
-
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=61486664]
+script = ExtResource("2_feb5d")
 
 [node name="Player" parent="." unique_id=660326814 instance=ExtResource("1_80nbo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0.5)
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=1439258397]
-transform = Transform3D(32.731285, 0, 0, 0, 1, 0, 0, 0, 33.653286, 0, 0, 0)
-use_collision = true
-mesh = SubResource("BoxMesh_e2o6t")
-material = SubResource("StandardMaterial3D_feb5d")
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=195615857]
+navigation_mesh = SubResource("NavigationMesh_feb5d")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="NavigationRegion3D" unique_id=1894291964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -9)
+mesh = SubResource("BoxMesh_feb5d")
+script = ExtResource("4_fc0e3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D3" unique_id=165741932]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D3/StaticBody3D" unique_id=127454559]
+shape = SubResource("BoxShape3D_feb5d")
+
+[node name="Pivot" type="Node3D" parent="NavigationRegion3D" unique_id=1024285554]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -6, 0, -8)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/Pivot" unique_id=17955811]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.5, 3.5)
+mesh = SubResource("BoxMesh_fc0e3")
+script = ExtResource("5_7jktm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Pivot/MeshInstance3D2" unique_id=611427345]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Pivot/MeshInstance3D2/StaticBody3D" unique_id=223686352]
+shape = SubResource("BoxShape3D_7jktm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D" unique_id=789179137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_feb5d")
+script = ExtResource("4_fc0e3")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D" unique_id=1171058116]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D" unique_id=441829348]
+shape = SubResource("BoxShape3D_feb5d")

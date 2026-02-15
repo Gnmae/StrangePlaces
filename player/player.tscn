@@ -9,6 +9,8 @@
 [node name="Player" type="CharacterBody3D" unique_id=660326814]
 script = ExtResource("1_rkbax")
 
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=660910079]
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1145311079]
 mesh = SubResource("CapsuleMesh_oul6g")
 

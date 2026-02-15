@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cltctqj6kog0x"]
+
+[ext_resource type="PackedScene" uid="uid://b04yt0rwfckym" path="res://player/player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://dyrarwcff6phq" path="res://game.gd" id="1_fc0e3"]
+[ext_resource type="Script" uid="uid://ct0gyvew5u23t" path="res://camera_3d.gd" id="2_feb5d"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e2o6t"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_feb5d"]
+sky_material = SubResource("ProceduralSkyMaterial_e2o6t")
+
+[sub_resource type="Environment" id="Environment_fc0e3"]
+background_mode = 2
+sky = SubResource("Sky_feb5d")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_e2o6t"]
+
+[sub_resource type="Gradient" id="Gradient_e2o6t"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_feb5d"]
+gradient = SubResource("Gradient_e2o6t")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_feb5d"]
+albedo_texture = SubResource("GradientTexture2D_feb5d")
+
+[node name="Game" type="Node3D" unique_id=438035562]
+script = ExtResource("1_fc0e3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1867595415]
+environment = SubResource("Environment_fc0e3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1372116148]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1247868393]
+transform = Transform3D(0.7071068, -0.49999997, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, -0.49999997, 0.5, 50, 72.30237, 50)
+projection = 1
+size = 25.0
+script = ExtResource("2_feb5d")
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D" unique_id=61486664]
+
+[node name="Player" parent="." unique_id=660326814 instance=ExtResource("1_80nbo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="." unique_id=1439258397]
+transform = Transform3D(32.731285, 0, 0, 0, 1, 0, 0, 0, 33.653286, 0, 0, 0)
+use_collision = true
+mesh = SubResource("BoxMesh_e2o6t")
+material = SubResource("StandardMaterial3D_feb5d")
