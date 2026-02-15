@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://l3ywg7k17i11"]
+
+[ext_resource type="PackedScene" uid="uid://b04yt0rwfckym" path="res://player/player.tscn" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://dyrarwcff6phq" path="res://game.gd" id="1_fc0e3"]
+[ext_resource type="Script" uid="uid://m7svak21auhr" path="res://player_detector.gd" id="3_feb5d"]
+
+[sub_resource type="Gradient" id="Gradient_80nbo"]
+colors = PackedColorArray(0.10747976, 0.10747973, 0.10747973, 1, 0.22175226, 0.33714807, 0.41871804, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_e2o6t"]
+gradient = SubResource("Gradient_80nbo")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80nbo"]
+size = Vector2(125, 125)
+
+[node name="Game" type="Node2D" unique_id=76718178]
+script = ExtResource("1_fc0e3")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1426133047]
+offset_left = -14873.0
+offset_top = -5887.0
+offset_right = 17727.0
+offset_bottom = 7656.0
+texture = SubResource("GradientTexture2D_e2o6t")
+
+[node name="Player" parent="." unique_id=197532890 instance=ExtResource("1_80nbo")]
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=219472091]
+unique_name_in_owner = true
+
+[node name="Player2" parent="." unique_id=1518769127 instance=ExtResource("1_80nbo")]
+position = Vector2(119, -164)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1487157874]
+position = Vector2(440, -40)
+script = ExtResource("3_feb5d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1314151407]
+shape = SubResource("RectangleShape2D_80nbo")
+
+[node name="ColorRect" type="ColorRect" parent="Area2D" unique_id=183815394]
+offset_left = -63.0
+offset_top = -62.0
+offset_right = 62.0
+offset_bottom = 63.0
+color = Color(1, 0, 1, 1)
